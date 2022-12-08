@@ -1,0 +1,53 @@
+.spacer {
+  margin-left: 10%;
+  font-family: HelveticaNeue;
+}
+
+a {
+  font-family: "HelveticaNeue";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: white;
+  text-decoration: none;
+}
+.logo {
+  font-size: 20px;
+  cursor: pointer;
+}
+span {
+  font-family: "HelveticaNeue";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: white;
+  text-decoration: none;
+}
+.icon {
+  margin-left: 8%;
+  margin-right: 5px;
+}
+.segment {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+@media screen and (min-width: 1400px) {
+  .spacer {
+    margin-left: 30%;
+  }
+  .segment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    min-height: 400px;
+  }
+}
+:host {
+  display: block;
+  background-color: #f7f7f7;
+}

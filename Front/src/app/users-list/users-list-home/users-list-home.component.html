@@ -1,0 +1,195 @@
+<!-- Here starts Filter  -->
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+  <div class="name">
+    <mat-form-field appearance="standard" class="filter">
+      <mat-label>Filter By First Name</mat-label>
+      <input
+        matInput
+        formControlName="firstNameFilter"
+        placeholder="Type First Name here"
+        #input
+        (keyup)="applyFilter($event)"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="standard" class="filter">
+      <mat-label>Filter by Last Name</mat-label>
+      <input
+        matInput
+        formControlName="lastNameFilter"
+        placeholder="Type Last Name here"
+        #input
+        (keyup)="applyFilter($event)"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="standard" class="filter">
+      <mat-label>Filter By Id Number</mat-label>
+      <input
+        matInput
+        formControlName="personalNumberFilter"
+        placeholder="Type ID number here"
+        #input
+        (keyup)="applyFilter($event)"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="standard" class="filter">
+      <mat-label>Filter By Email</mat-label>
+      <input
+        matInput
+        formControlName="emailFilter"
+        placeholder="Type Email here"
+        #input
+        (keyup)="applyFilter($event)"
+      />
+    </mat-form-field>
+  </div>
+  <div class="name">
+    <mat-form-field appearance="standard" class="date">
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input
+          matStartDate
+          formControlName="dateOfBirthStart"
+          placeholder="Start date"
+          (keyup)="applyFilter($event)"
+        />
+        <input
+          matEndDate
+          formControlName="dateOfBirthEnd"
+          placeholder="End date"
+          (keyup)="applyFilter($event)"
+        />
+      </mat-date-range-input>
+      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+
+    <mat-form-field class="filter" appearance="standard">
+      <mat-label>Category</mat-label>
+      <mat-select
+        formControlName="categoryIdFilter"
+        (click)="applyFilter($event)"
+      >
+        <mat-option (click)="applyFilter($event)">None</mat-option>
+        <mat-option *ngFor="let category of categories" [value]="category.id">{{
+          category.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="filter" appearance="standard">
+      <mat-label>Status</mat-label>
+      <mat-select
+        formControlName="statusIdFilter"
+        (keyup)="applyFilter($event)"
+      >
+        <mat-option (click)="applyFilter($event)">None</mat-option>
+        <mat-option *ngFor="let status of status" [value]="status.id">{{
+          status.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="btnContainer">
+      <button type="submit" mat-raised-button>Filter</button>
+    </div>
+  </div>
+</form>
+<!-- Here ends Filter  -->
+<a routerLink="add-new" mat-raised-button color="primary" class="addUserBtn">
+  Add User</a
+>
+<!-- Here starts list -->
+<div class="mat-elevation-z8 table">
+  <table mat-table [dataSource]="dataSource">
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef>id</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.id }}
+      </td>
+    </ng-container>
+
+    <!-- FirstName Column -->
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell *matHeaderCellDef>First Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.firstName }}</td>
+    </ng-container>
+
+    <!-- LastName Column -->
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell *matHeaderCellDef>Last Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
+    </ng-container>
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="personalNumber">
+      <th mat-header-cell *matHeaderCellDef>ID Number</th>
+      <td mat-cell *matCellDef="let element">{{ element.personalNumber }}</td>
+    </ng-container>
+
+    <!-- Date of Birth Column -->
+    <ng-container matColumnDef="dateOfBirth">
+      <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.dateOfBirth | date : "dd/MM/yyyy" }}
+      </td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    </ng-container>
+
+    <!-- Category Column -->
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef>Category</th>
+      <td mat-cell *matCellDef="let element">{{ element.category.name }}</td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let element">{{ element.status.name }}</td>
+    </ng-container>
+
+    <!-- Action Column -->
+    <ng-container matColumnDef="action" class="actionwidth">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let element">
+        <a
+          mat-stroked-button
+          color="warn"
+          class="btn"
+          (click)="deleteUser(element.id)"
+        >
+          Delete
+        </a>
+
+        <a
+          [routerLink]="'update/' + element.id"
+          color="primary"
+          mat-stroked-button
+          class="btn"
+        >
+          Edit
+        </a>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <mat-paginator
+    #paginator
+    [length]="totalRows"
+    [pageIndex]="currentPage"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="pageChanged($event)"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</div>

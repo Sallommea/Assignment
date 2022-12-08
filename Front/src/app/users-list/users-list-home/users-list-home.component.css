@@ -1,0 +1,71 @@
+table {
+  width: 1300px;
+}
+a {
+  color: white;
+  text-decoration: none;
+}
+form {
+  width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-top: -40px;
+  margin-bottom: 40px;
+}
+.btnContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.name {
+  display: flex;
+  flex-direction: row;
+}
+.addUserBtn {
+  width: 200px;
+}
+.btn {
+  width: 20px;
+  transform: scale(0.9);
+  font-size: 13px;
+  margin-right: 5px;
+}
+.deleteIcon {
+  transform: scale(0.9);
+}
+.date {
+  margin-right: 40px;
+}
+.filter {
+  margin-right: 40px;
+}
+.filterBtn {
+  margin-left: 52%;
+}
+.mat-column-action {
+  width: 15%;
+}
+.mat-column-firstName {
+  width: 90px;
+  margin-left: 30px;
+}
+.mat-column-lastName {
+  width: 100px;
+}
+.mat-column-personalNumber {
+  width: 100px;
+}
+.mat-column-dateOfBirth {
+  width: 100px;
+}
+.mat-column-email {
+  width: 90px;
+}
+.mat-column-category {
+  width: 90px;
+}
+.mat-column-status {
+  width: 90px;
+}

@@ -1,0 +1,20 @@
+<div class="navbar">
+  <mat-toolbar color="primary" class="mat-elevation-z6">
+    <mat-icon class="icon">account_circle</mat-icon>
+    <a class="logo" routerLink=""> User Management System </a>
+    <div class="spacer">
+      <a routerLink="/categories" routerLinkActive="active" mat-button
+        >Categories</a
+      >
+      <a routerLink="/userStatuses" routerLinkActive="active" mat-button
+        >User Status</a
+      >
+      <a routerLink="/usersList" routerLinkActive="active" mat-button
+        >Users List</a
+      >
+    </div>
+  </mat-toolbar>
+</div>
+<div class="segment">
+  <router-outlet></router-outlet>
+</div>

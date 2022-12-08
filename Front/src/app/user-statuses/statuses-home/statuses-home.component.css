@@ -1,0 +1,16 @@
+table {
+  width: 800px;
+}
+.filter {
+  margin-left: 400px;
+  margin-right: 50px;
+}
+.mat-column-action {
+  width: 170px;
+}
+.btn {
+  width: 20px;
+  transform: scale(0.9);
+  font-size: 13px;
+  margin-right: 5px;
+}

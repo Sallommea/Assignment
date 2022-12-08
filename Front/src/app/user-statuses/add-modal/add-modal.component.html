@@ -1,0 +1,10 @@
+<h5 mat-dialog-title>Add new Status</h5>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput appearance="fill" [(ngModel)]="data.status" />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.status">Ok</button>
+</div>

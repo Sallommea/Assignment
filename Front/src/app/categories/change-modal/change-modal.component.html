@@ -1,0 +1,10 @@
+<h5 mat-dialog-title>Update category</h5>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput appearance="fill" [(ngModel)]="data.changedName" />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.changedName">Ok</button>
+</div>
