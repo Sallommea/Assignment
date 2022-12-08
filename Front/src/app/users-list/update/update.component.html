@@ -1,4 +1,4 @@
-<div class="container mat-elevation-z8" *ngIf="showForm">
+<div class="container mat-elevation-z8" *ngIf="user">
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()" id="form1">
     <mat-form-field class="name" appearance="outline">
       <mat-label>First Name</mat-label>

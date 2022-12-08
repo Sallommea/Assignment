@@ -32,7 +32,6 @@ export class CategoriesHomeComponent implements AfterViewInit {
       data: { name: this.name, animal: this.animal },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
       if (result) {
         this.animal = result;
 

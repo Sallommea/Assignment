@@ -74,7 +74,7 @@ export class UsersListHomeComponent implements AfterViewInit, OnInit {
           this.paginator.pageIndex = this.currentPage;
           this.paginator.length = res.rowNumber;
           this.totalRows = res.rowNumber;
-        });
+        }, 0);
       });
   }
   pageChanged(event: PageEvent) {
