@@ -160,6 +160,94 @@ public static class DbMock
             StatusId = 1,
             DateOfBirth = new DateTime(year: 1998, month: 3, day: 29)
         },
+        new User
+        {
+            Id = 15,
+            Email = "mail6@mail.com",
+            CategoryId = 2,
+            FirstName = "Sherlock",
+            LastName = "Holmes",
+            PersonalNumber = "01011091503",
+            StatusId = 4,
+            DateOfBirth = new DateTime(year: 1999, month: 3, day: 29)
+        },
+        new User
+        {
+            Id = 16,
+            Email = "mail6@mail.com",
+            CategoryId = 2,
+            FirstName = "Sherlock",
+            LastName = "Holmes",
+            PersonalNumber = "01011091503",
+            StatusId = 4,
+            DateOfBirth = new DateTime(year: 1999, month: 3, day: 29)
+        },
+        new User
+        {
+            Id = 17,
+            Email = "mail6@mail.com",
+            CategoryId = 2,
+            FirstName = "Sherlock",
+            LastName = "Holmes",
+            PersonalNumber = "01011091503",
+            StatusId = 4,
+            DateOfBirth = new DateTime(year: 1999, month: 3, day: 29)
+        },
+        new User
+        {
+            Id = 18,
+            Email = "mail6@mail.com",
+            CategoryId = 2,
+            FirstName = "Sherlock",
+            LastName = "Holmes",
+            PersonalNumber = "01011091503",
+            StatusId = 4,
+            DateOfBirth = new DateTime(year: 1999, month: 3, day: 29)
+        },
+        new User
+        {
+            Id = 19,
+            Email = "mail6@mail.com",
+            CategoryId = 2,
+            FirstName = "Sherlock",
+            LastName = "Holmes",
+            PersonalNumber = "01011091503",
+            StatusId = 4,
+            DateOfBirth = new DateTime(year: 1999, month: 3, day: 29)
+        },
+        new User
+        {
+            Id = 20,
+            Email = "mail6@mail.com",
+            CategoryId = 2,
+            FirstName = "Sherlock",
+            LastName = "Holmes",
+            PersonalNumber = "01011091503",
+            StatusId = 4,
+            DateOfBirth = new DateTime(year: 1999, month: 3, day: 29)
+        },
+        new User
+        {
+            Id = 21,
+            Email = "mail6@mail.com",
+            CategoryId = 2,
+            FirstName = "Sherlock",
+            LastName = "Holmes",
+            PersonalNumber = "01011091503",
+            StatusId = 4,
+            DateOfBirth = new DateTime(year: 1999, month: 3, day: 29)
+        },
+        new User
+        {
+            Id = 22,
+            Email = "mail6@mail.com",
+            CategoryId = 2,
+            FirstName = "Sherlock",
+            LastName = "Holmes",
+            PersonalNumber = "01011091503",
+            StatusId = 4,
+            DateOfBirth = new DateTime(year: 1999, month: 3, day: 29)
+        }
     };
 
     public static List<Category> Categories = new()
