@@ -48,7 +48,6 @@ export class AddNewComponent implements OnInit, OnDestroy {
   }
   onSubmit() {
     this.userService.addUser(this.userForm.value).subscribe((res) => {
-      console.log(this.userForm.value);
       this.router.navigateByUrl('/usersList');
     });
   }

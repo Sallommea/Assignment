@@ -12,7 +12,7 @@
   Add Category
 </button>
 
-<div class="mat-elevation-z8 table">
+<div *ngIf="dataSource?.data?.length > 0" class="mat-elevation-z8 table">
   <table mat-table [dataSource]="dataSource">
     <!-- Position Column -->
     <ng-container matColumnDef="position">

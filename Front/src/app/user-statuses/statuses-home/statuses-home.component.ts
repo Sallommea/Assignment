@@ -63,8 +63,9 @@ export class StatusesHomeComponent implements AfterViewInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.statusService.updateStatus(id, result).subscribe((res) => {});
-        this.loadData();
+        this.statusService.updateStatus(id, result).subscribe((res) => {
+          this.loadData();
+        });
       }
     });
   }

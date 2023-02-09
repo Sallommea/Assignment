@@ -53,7 +53,6 @@ export class UpdateComponent implements OnInit {
       categoryId: new FormControl(user.category.id),
       statusId: new FormControl(user.status.id),
     });
-    console.log(user);
   }
   onSubmit() {
     const userUpdated: Ussser = {
@@ -66,7 +65,6 @@ export class UpdateComponent implements OnInit {
       categoryId: this.userForm.value.categoryId,
       statusId: this.userForm.value.statusId,
     };
-    console.log(userUpdated);
     this.usersService.updateUser(userUpdated).subscribe((res) => {
       this.router.navigateByUrl('/usersList');
     });
