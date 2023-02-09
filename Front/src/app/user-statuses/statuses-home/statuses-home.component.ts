@@ -16,11 +16,14 @@ export class StatusesHomeComponent implements AfterViewInit {
   status: string;
   name: string;
   changedStatus: string;
+  filterValue: string;
   id: number;
   statuses: Status[] = [];
   totalRows = 0;
   pageSize = 5;
   currentPage = 0;
+  filterPage = 0;
+  event: Event;
   pageSizeOptions: number[] = [5, 10];
 
   constructor(
@@ -87,13 +90,19 @@ export class StatusesHomeComponent implements AfterViewInit {
   pageChanged(event: PageEvent) {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
+    this.filterPage = event.pageIndex;
+    if (this.filterValue != '') {
+      this.applyFilter(this.event);
+      return;
+    }
     this.loadData();
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    const value = filterValue.trim().toLowerCase();
-    if (filterValue != '') {
+    this.event = event;
+    this.filterValue = (event.target as HTMLInputElement).value;
+    const value = this.filterValue.trim().toLowerCase();
+    if (this.filterValue != '') {
       this.statusService
         .filterStatus(this.currentPage, this.pageSize, value)
         .subscribe((res) => {
@@ -105,7 +114,7 @@ export class StatusesHomeComponent implements AfterViewInit {
           });
         });
     }
-    if (filterValue === '') {
+    if (this.filterValue === '') {
       this.loadData();
     }
   }

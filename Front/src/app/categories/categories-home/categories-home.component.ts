@@ -15,12 +15,15 @@ import { ChangeModalComponent } from '../change-modal/change-modal.component';
 export class CategoriesHomeComponent implements AfterViewInit {
   animal: string;
   name: string;
+  filterValue: string;
   changedName: string;
   id: number;
   categories: Category[] = [];
   totalRows = 0;
   pageSize = 5;
   currentPage = 0;
+  filterPage = 0;
+  event: Event;
   pageSizeOptions: number[] = [5, 10];
   constructor(
     private dialogRef: MatDialog,
@@ -86,28 +89,41 @@ export class CategoriesHomeComponent implements AfterViewInit {
   pageChanged(event: PageEvent) {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
+    this.filterPage = event.pageIndex;
+    if (this.filterValue != undefined) {
+      this.applyFilter(this.event);
+
+      return;
+    }
     this.loadData();
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
+    this.event = event;
+    const newFilterValue = (event.target as HTMLInputElement).value;
 
-    const value = filterValue.trim().toLowerCase();
-    if (filterValue != '') {
+    if (this.filterValue != newFilterValue) {
+      this.filterPage = 0;
+    }
+
+    this.filterValue = newFilterValue;
+    const value = this.filterValue.trim().toLowerCase();
+
+    if (this.filterValue != '') {
       this.CategoryService.filterCategories(
-        this.currentPage,
+        this.filterPage,
         this.pageSize,
         value
       ).subscribe((res) => {
         this.dataSource.data = res.categories;
         setTimeout(() => {
-          this.paginator.pageIndex = this.currentPage;
+          this.paginator.pageIndex = this.filterPage;
           this.paginator.length = res.rowNumber;
           this.totalRows = res.rowNumber;
         });
       });
     }
-    if (filterValue === '') {
+    if (this.filterValue === '') {
       this.loadData();
     }
   }

@@ -17,7 +17,9 @@ import { UserStatusesRoutingModule } from 'src/app/user-statuses/user-statuses-r
 })
 export class UsersListHomeComponent implements AfterViewInit, OnInit {
   totalRows = 0;
+  searchFilter: UserSearch;
   pageSize = 5;
+  filterPage = 0;
   currentPage = 0;
   users: User[] = [];
   user: User;
@@ -80,6 +82,22 @@ export class UsersListHomeComponent implements AfterViewInit, OnInit {
   pageChanged(event: PageEvent) {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
+    this.filterPage = event.pageIndex;
+
+    if (
+      this.searchFilter != undefined ||
+      this.searchFilter?.categoryIdFilter != null ||
+      this.searchFilter?.statusIdFilter != null ||
+      this.searchFilter?.dateOfBirthEnd != null ||
+      this.searchFilter?.dateOfBirthStart != null ||
+      this.searchFilter?.emailFilter !== '' ||
+      this.searchFilter?.firstNameFilter !== '' ||
+      this.searchFilter?.lastNameFilter != null
+    ) {
+      this.onSubmit();
+      return;
+    }
+
     this.loadData();
   }
 
@@ -92,7 +110,7 @@ export class UsersListHomeComponent implements AfterViewInit, OnInit {
     }
   }
   onSubmit() {
-    const filterValue: UserSearch = {
+    const newFilterValue: UserSearch = {
       emailFilter:
         this.searchForm.value.emailFilter != null
           ? this.searchForm.value.emailFilter.trim()
@@ -115,13 +133,19 @@ export class UsersListHomeComponent implements AfterViewInit, OnInit {
       statusIdFilter: this.searchForm.value.statusIdFilter,
     };
 
+    if (JSON.stringify(newFilterValue) != JSON.stringify(this.searchFilter)) {
+      this.filterPage = 0;
+    }
+
+    this.searchFilter = newFilterValue;
+
     this.usersService
-      .filterUsers(this.currentPage, this.pageSize, filterValue)
+      .filterUsers(this.filterPage, this.pageSize, this.searchFilter)
       .subscribe((res) => {
         this.dataSource.data = res.users;
 
         setTimeout(() => {
-          this.paginator.pageIndex = this.currentPage;
+          this.paginator.pageIndex = this.filterPage;
           this.paginator.length = res.rowNumber;
           this.totalRows = res.rowNumber;
         });
