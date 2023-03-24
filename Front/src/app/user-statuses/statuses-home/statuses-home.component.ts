@@ -3,7 +3,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { Status } from 'src/app/models/status.model';
-import { TEXT_COLUMN_OPTIONS } from '@angular/cdk/table';
 import { StatusService } from 'src/app/services/status.service';
 import { AddModalComponent } from '../add-modal/add-modal.component';
 import { UpdateModalComponent } from '../update-modal/update-modal.component';
@@ -15,8 +14,8 @@ import { UpdateModalComponent } from '../update-modal/update-modal.component';
 export class StatusesHomeComponent implements AfterViewInit {
   status: string;
   name: string;
-  changedStatus: string;
   filterValue: string;
+  changedStatus: string;
   id: number;
   statuses: Status[] = [];
   totalRows = 0;
@@ -34,12 +33,6 @@ export class StatusesHomeComponent implements AfterViewInit {
   ngOnInit(): void {
     this.loadData();
   }
-
-  displayedColumns: string[] = ['position', 'name', 'action'];
-
-  dataSource: MatTableDataSource<Status> = new MatTableDataSource();
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   openDialog() {
     const dialogRef = this.dialogRef.open(AddModalComponent, {
@@ -59,7 +52,7 @@ export class StatusesHomeComponent implements AfterViewInit {
   openDialogUpdate(id: number) {
     const dialogRef = this.dialogRef.open(UpdateModalComponent, {
       width: '250px',
-      data: { changedStatus: this.changedStatus },
+      data: { id: this.id, changedStatus: this.changedStatus },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -69,6 +62,12 @@ export class StatusesHomeComponent implements AfterViewInit {
       }
     });
   }
+
+  displayedColumns: string[] = ['position', 'name', 'action'];
+
+  dataSource: MatTableDataSource<Status> = new MatTableDataSource();
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -92,7 +91,7 @@ export class StatusesHomeComponent implements AfterViewInit {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
     this.filterPage = event.pageIndex;
-    if (this.filterValue != '') {
+    if (this.filterValue != undefined) {
       this.applyFilter(this.event);
       return;
     }
@@ -101,15 +100,23 @@ export class StatusesHomeComponent implements AfterViewInit {
 
   applyFilter(event: Event) {
     this.event = event;
-    this.filterValue = (event.target as HTMLInputElement).value;
+    const newFilterValue = (event.target as HTMLInputElement).value;
+
+    if (this.filterValue != newFilterValue) {
+      this.filterPage = 0;
+    }
+
+    this.filterValue = newFilterValue;
+
     const value = this.filterValue.trim().toLowerCase();
+
     if (this.filterValue != '') {
       this.statusService
-        .filterStatus(this.currentPage, this.pageSize, value)
+        .filterStatus(this.filterPage, this.pageSize, value)
         .subscribe((res) => {
           this.dataSource.data = res.statuses;
           setTimeout(() => {
-            this.paginator.pageIndex = this.currentPage;
+            this.paginator.pageIndex = this.filterPage;
             this.paginator.length = res.rowNumber;
             this.totalRows = res.rowNumber;
           });
@@ -121,6 +128,9 @@ export class StatusesHomeComponent implements AfterViewInit {
   }
 
   deleteStatus(id: number) {
+    if (this.dataSource?.data?.length === 1) {
+      this.currentPage = this.currentPage - 1;
+    }
     this.statusService.deleteStatus(id).subscribe((res) => {
       this.loadData();
     });

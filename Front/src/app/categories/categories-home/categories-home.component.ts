@@ -13,7 +13,7 @@ import { ChangeModalComponent } from '../change-modal/change-modal.component';
   styleUrls: ['./categories-home.component.css'],
 })
 export class CategoriesHomeComponent implements AfterViewInit {
-  animal: string;
+  newInput: string;
   name: string;
   filterValue: string;
   changedName: string;
@@ -25,22 +25,28 @@ export class CategoriesHomeComponent implements AfterViewInit {
   filterPage = 0;
   event: Event;
   pageSizeOptions: number[] = [5, 10];
+
   constructor(
     private dialogRef: MatDialog,
     private CategoryService: CategoriesService
   ) {}
+
+  ngOnInit(): void {
+    this.loadData();
+  }
+
   openDialog() {
     const dialogRef = this.dialogRef.open(ModalComponent, {
       width: '250px',
-      data: { name: this.name, animal: this.animal },
+      data: { name: this.name, newInput: this.newInput },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.animal = result;
+        this.newInput = result;
 
-        this.CategoryService.addCategory(this.animal).subscribe((res) => {});
+        this.CategoryService.addCategory(this.newInput).subscribe((res) => {});
         this.loadData();
-        this.animal = '';
+        this.newInput = '';
       }
     });
   }
@@ -68,9 +74,7 @@ export class CategoriesHomeComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
-  ngOnInit(): void {
-    this.loadData();
-  }
+
   loadData() {
     this.CategoryService.getAllCategories(
       this.currentPage,
@@ -106,6 +110,7 @@ export class CategoriesHomeComponent implements AfterViewInit {
     }
 
     this.filterValue = newFilterValue;
+
     const value = this.filterValue.trim().toLowerCase();
 
     if (this.filterValue != '') {
@@ -128,6 +133,9 @@ export class CategoriesHomeComponent implements AfterViewInit {
   }
 
   deleteOne(id: number) {
+    if (this.dataSource?.data?.length === 1) {
+      this.currentPage = this.currentPage - 1;
+    }
     this.CategoryService.deleteCategory(id).subscribe((res) => {
       this.loadData();
     });

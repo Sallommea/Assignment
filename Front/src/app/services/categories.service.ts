@@ -23,6 +23,7 @@ export class CategoriesService {
   getAll(): Observable<Category[]> {
     return this.http.get<Category[]>(`${this.baseUrl}categories/get-all`);
   }
+
   filterCategories(
     page: number,
     itemsPerPage: number,

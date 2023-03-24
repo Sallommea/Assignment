@@ -153,6 +153,9 @@ export class UsersListHomeComponent implements AfterViewInit, OnInit {
   }
 
   deleteUser(id: number) {
+    if (this.dataSource?.data?.length === 1) {
+      this.currentPage = this.currentPage - 1;
+    }
     this.usersService.deleteUser(id).subscribe((res) => this.loadData());
   }
 }
